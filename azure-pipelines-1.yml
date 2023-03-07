@@ -38,9 +38,28 @@ stages:
 #        imageName: '$(ImageName)'
 #      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
       
-      - task: Docker@2
-        inputs:
-          containerRegistry: 'DockerHub'
-          command: 'buildAndPush'
-          buildContext: $(Build.SourcesDirectory)
-          Dockerfile: 'arjanvandenberg2/Dockerfile'
+#      - task: Docker@2
+#        inputs:
+#          containerRegistry: 'DockerHub'
+#          command: 'buildAndPush'
+#          buildContext: $(Build.SourcesDirectory)
+#          Dockerfile: 'arjanvandenberg2/Dockerfile'
+#          steps:
+- task: Docker@2
+  displayName: Login to ACR
+  inputs:
+    command: login
+    containerRegistry: DockerHub
+- task: Docker@2
+  displayName: Login to Docker Hub
+  inputs:
+    command: login
+    containerRegistry: DockerHub
+- task: Docker@2
+  displayName: Build and Push
+  inputs:
+    command: buildAndPush
+    repository: arjanvandenberg2 # username/contosoRepository for DockerHub
+    tags: |
+      tag1
+      tag2
