@@ -7,8 +7,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
  
-variables:
-  ImageName: 'arjanvandenberg2/microservicedemo:$(Build.BuildId)'
+#variables:
+#  ImageName: 'arjanvandenberg2/microservicedemo:$(Build.BuildId)'
  
 stages:
 - stage: Build
@@ -17,23 +17,29 @@ stages:
   - job: Build
     displayName: Build and push Docker image
     steps:
-    - task: Docker@1
-      displayName: 'Build the Docker image'
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'DockerHub'
-        command: 'Build an image'
-        dockerFile: '**/Dockerfile'
-        imageName: '$(ImageName)'
-        includeLatestTag: true
-        useDefaultContext: false
-        buildContext: '.'
+#    - task: Docker@1
+#      displayName: 'Build the Docker image'
+#      inputs:
+#        containerregistrytype: 'Container Registry'
+#        dockerRegistryEndpoint: 'DockerHub'
+#        command: 'Build an image'
+#        dockerFile: '**/Dockerfile'
+#        imageName: '$(ImageName)'
+#        includeLatestTag: true
+#        useDefaultContext: false
+#        buildContext: '.'
      
-    - task: Docker@1
-      displayName: 'Push the Docker image to Dockerhub'
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'DockerHub'
-        command: 'Push an image'
-        imageName: '$(ImageName)'
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+#    - task: Docker@1
+#      displayName: 'Push the Docker image to Dockerhub'
+#      inputs:
+#        containerregistrytype: 'Container Registry'
+#        dockerRegistryEndpoint: 'DockerHub'
+#        command: 'Push an image'
+#        imageName: '$(ImageName)'
+#      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      
+      - task: Docker@2
+        inputs:
+          containerRegistry: 'DockerHub'
+          command: 'buildAndPush'
+          Dockerfile: '**/Dockerfile'
