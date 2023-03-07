@@ -41,5 +41,5 @@ stages:
         inputs:
           containerRegistry: 'DockerHub'
           repository: 'arjanvandberg2'
-          command: 'buildAndPush'
+          command: 'build'
           Dockerfile: '**\Dockerfile'
