@@ -43,4 +43,4 @@ stages:
           containerRegistry: 'DockerHub'
           command: 'buildAndPush'
           buildContext: $(Build.SourcesDirectory)
-          Dockerfile: '**/Dockerfile'
+          Dockerfile: 'arjanvandenberg2/Dockerfile'
